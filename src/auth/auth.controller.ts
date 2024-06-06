@@ -96,7 +96,6 @@ class AuthController implements Controller {
     next: express.NextFunction
   ) => {
     const user: User = request.user;
-    delete (user as { password?: string }).password;
 
     try {
       response.send({ user });
