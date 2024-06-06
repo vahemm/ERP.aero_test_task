@@ -4,7 +4,6 @@ import dataSource from "../config/typeorm.config";
 
 import UserWithThatCredentialsAlreadyExistsException from "../exceptions/UserWithThatCredentialsAlreadyExistsException";
 import DataStoredInToken from "../interfaces/dataStoredInToken";
-import TokenData from "../interfaces/tokenData.interface";
 import User from "../user/user.entity";
 import TokenService from "../token/token.service";
 import Token from "../token/token.entity";

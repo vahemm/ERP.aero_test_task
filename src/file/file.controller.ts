@@ -1,15 +1,11 @@
 import * as express from "express";
 import Controller from "../interfaces/controller.interface";
-import AuthService from "./file.service";
-import validationMiddleware from "../middlewares/validation.middleware";
 import { RequestWithUser } from "../interfaces/requestWithUser.interface";
 import { authMiddleware } from "../middlewares/auth.middleware";
-import User from "../user/user.entity";
 import FileService from "./file.service";
 import { fileUpdateMulter, upload } from "../middlewares/multer.middlware";
 import WrongFileIdException from "../exceptions/WrongFileIdException";
 import path from "path";
-import multer from "multer";
 import { RequestWithUserAndFile } from "../interfaces/requestWithUserAndFile.interface";
 import { fileUpdateMiddleware } from "../middlewares/fileUpdate.middleware";
 

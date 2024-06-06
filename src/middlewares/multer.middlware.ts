@@ -1,5 +1,4 @@
 import fs from "fs";
-import util from "util";
 import multer from "multer";
 import path from "path";
 import { RequestWithUserAndFile } from "../interfaces/requestWithUserAndFile.interface";

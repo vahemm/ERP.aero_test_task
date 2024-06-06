@@ -33,7 +33,6 @@ class FileService {
 
     return fileList;
   }
-  updateFileByID;
 
   public async getFileById(user, id) {
     const file = await this.fileRepository
