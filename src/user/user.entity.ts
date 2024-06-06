@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Token from "../token/token.entity";
+import File from "../file/file.entity";
 
 @Entity()
 class User {
@@ -15,11 +16,14 @@ class User {
   @Column()
   public fullName: string;
 
-  @Column()
+  @Column({ select: false })
   public password: string;
 
   @OneToMany(() => Token, (token: Token) => token.user)
   public tokens: Token[];
+
+  @OneToMany(() => File, (file: File) => file.user)
+  public files: Token[];
 }
 
 export default User;

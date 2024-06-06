@@ -9,10 +9,10 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 import User from "../user/user.entity";
 import { LogoutDto } from "./dtos/logout.dto";
 
-class AuthenticationController implements Controller {
+class AuthController implements Controller {
   public path = "/auth";
   public router = express.Router();
-  private authenticationService = new AuthService();
+  private authService = new AuthService();
 
   constructor() {
     this.initializeRoutes();
@@ -53,7 +53,7 @@ class AuthenticationController implements Controller {
     const userData: CreateUserDto = request.body;
     try {
       const { accessToken, refreshToken, user } =
-        await this.authenticationService.signUp(userData);
+        await this.authService.signUp(userData);
       response.send({ user, accessToken, refreshToken });
     } catch (error) {
       next(error);
@@ -68,7 +68,7 @@ class AuthenticationController implements Controller {
     const userData: SignInUserDto = request.body;
     try {
       const { accessToken, refreshToken, user } =
-        await this.authenticationService.signIn(userData);
+        await this.authService.signIn(userData);
       response.send({ user, accessToken, refreshToken });
     } catch (error) {
       next(error);
@@ -83,7 +83,7 @@ class AuthenticationController implements Controller {
     const data: RefreshTokenDto = request.body;
     try {
       const { accessToken, refreshToken, user } =
-        await this.authenticationService.updateToken(data);
+        await this.authService.updateToken(data);
       response.send({ user, accessToken, refreshToken });
     } catch (error) {
       next(error);
@@ -113,7 +113,7 @@ class AuthenticationController implements Controller {
     const user: User = request.user;
     const deviceId: string = request.body.deviceId;
     try {
-      await this.authenticationService.logout(user, deviceId);
+      await this.authService.logout(user, deviceId);
       response.status(200).json({ message: "You are logged out!" });
     } catch (error) {
       next(error);
@@ -121,4 +121,4 @@ class AuthenticationController implements Controller {
   };
 }
 
-export default AuthenticationController;
+export default AuthController;

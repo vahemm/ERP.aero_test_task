@@ -6,6 +6,7 @@ import WrongAuthenticationTokenException from "../exceptions/WrongAuthentication
 import DataStoredInToken from "../interfaces/dataStoredInToken";
 import User from "../user/user.entity";
 import { RequestWithUser } from "../interfaces/requestWithUser.interface";
+import Token from "../token/token.entity";
 
 export async function authMiddleware(
   request: RequestWithUser,
@@ -13,20 +14,31 @@ export async function authMiddleware(
   next: NextFunction
 ) {
   const userRepository = dataSource.getRepository(User);
+  const tokenRepository = dataSource.getRepository(Token);
 
-  const authorization = request.headers.authorization.replace("Bearer ", "");
+  const authorization = request.headers.authorization;
 
   if (authorization) {
     const secret = process.env.JWT_ACCESS_TOKEN_SECRET as string;
     try {
+      const bearerToken = authorization.replace("Bearer ", "");
+
       const verificationResponse = jwt.verify(
-        authorization,
+        bearerToken,
         secret
       ) as DataStoredInToken;
 
       const id = verificationResponse.id;
 
       const user = await userRepository.findOne({ where: { id } });
+      const token = await tokenRepository.findOne({
+        where: { accessToken: bearerToken },
+      });
+
+      if (!token) {
+        next(new WrongAuthenticationTokenException());
+      }
+
       if (user) {
         request.user = user;
 

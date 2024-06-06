@@ -29,6 +29,7 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
+    // this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(cors())
   }

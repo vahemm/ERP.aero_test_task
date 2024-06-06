@@ -42,7 +42,6 @@ class AuthService {
       password: hashedPassword,
     });
     await this.userRepository.save(user);
-    delete (user as { password?: string }).password;
 
     const tokenData = await this.tokenService.createToken(
       user,
@@ -62,6 +61,7 @@ class AuthService {
 
     const user = await this.userRepository.findOne({
       where: [{ email: signInData.id }, { phone: signInData.id }],
+      select: ["password", "email", "files", "fullName", "id", "phone"],
     });
 
     if (!user) {
@@ -114,7 +114,6 @@ class AuthService {
       user,
       oldToken.deviceId
     );
-    delete (user as { password?: string }).password;
 
     return {
       accessToken: tokenData.accessToken,
