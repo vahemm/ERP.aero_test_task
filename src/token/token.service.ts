@@ -10,7 +10,7 @@ class TokenService {
   private tokenRepository = dataSource.getRepository(Token);
 
   public async createToken(user: User, deviceId: string): Promise<TokenData> {
-    const expiresIn = 60 * 1000; // 10 minute
+    const expiresIn = 60 * 10; // 10 minute
     const acceesTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET as string;
     const refreshTokenSecret = process.env.JWT_REFRESH_TOKEN_SECRET as string;
     const dataStoredInToken: DataStoredInToken = {
